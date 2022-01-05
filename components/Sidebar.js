@@ -17,7 +17,7 @@ function Sidebar({ providers }) {
     const { data: session, status } = useSession();
 
     return (
-        <div className="text-gray-500 p-5 text-sm border-r border-gray-500">
+        <div className="text-gray-500 p-5 text-sm border-r border-gray-900 overflow-y-scroll scrollbar-hide h-screen">
             <div className="space-y-4">
                 {session ? (
                     <button className="sidebar-btn" onClick={() => signOut()}>
