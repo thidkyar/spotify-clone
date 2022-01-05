@@ -25,12 +25,13 @@ function Sidebar({ providers }) {
         if (spotifyApi.getAccessToken()) {
             spotifyApi.getUserPlaylists().then((data) => {
                 setPlaylists(data.body.items);
+                setPlaylistId(data.body.items[0].id)
             });
         }
     }, [session, spotifyApi]);
 
     return (
-        <div className="text-gray-500 p-5 text-xs lg:text-sm border-r border-gray-900 overflow-y-scroll scrollbar-hide h-screen sm:max-w-[12rem] lg:max-w-[15rem] hidden md:inline-flex">
+        <div className="text-gray-500 p-5 text-xs lg:text-sm border-r border-gray-900 overflow-y-scroll scrollbar-hide h-screen sm:max-w-[12rem] lg:max-w-[15rem] hidden md:inline-flex pb-36">
             <div className="space-y-4">
                 {session ? (
                     <button className="sidebar-btn" onClick={() => signOut()}>
