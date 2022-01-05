@@ -5,12 +5,33 @@ import {
     PlusCircleIcon,
     HeartIcon,
     RssIcon,
+    LockClosedIcon,
+    LockOpenIcon,
 } from "@heroicons/react/outline";
+import { getProviders, signOut, useSession } from "next-auth/react";
+import Link from "next/link";
+import Modal from "react-modal/lib/components/Modal";
+import LoginForm from "./LoginForm";
 
-function Sidebar() {
+function Sidebar({ providers }) {
+    const { data: session, status } = useSession();
+
     return (
         <div className="text-gray-500 p-5 text-sm border-r border-gray-500">
             <div className="space-y-4">
+                {session ? (
+                    <button className="sidebar-btn" onClick={() => signOut()}>
+                        <LockClosedIcon className="h-5 w-5" />
+                        <p>Logout</p>
+                    </button>
+                ) : (
+                    <Link href="/login">
+                        <button className="sidebar-btn">
+                            <LockOpenIcon className="h-5 w-5" />
+                            <p>Login</p>
+                        </button>
+                    </Link>
+                )}
                 <button className="sidebar-btn">
                     <HomeIcon className="h-5 w-5" />
                     <p>Home</p>

@@ -1,7 +1,9 @@
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 import Sidebar from "../components/Sidebar";
 
 export default function Home() {
+    const { data: session } = useSession();
     return (
         <div className="bg-black h-screen overflow-hidden">
             <Head>
