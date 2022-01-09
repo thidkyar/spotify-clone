@@ -3,11 +3,17 @@ import { NextResponse } from "next/server";
 
 export async function middleware(req, res, next) {
     //TOKEN WILL EXIST IF USER IS LOGGED IN
-    const token = await getToken({ req, secret: process.env.JWT_SECRET });
+    const token = await getToken({
+        req,
+        secret: process.env.JWT_SECRET,
+        secureCookie:
+            process.env.NEXTAUTH_URL?.startsWith("https://") ??
+            !!process.env.VERCEL_URL,
+    });
 
     const { pathname } = req.nextUrl;
 
-    //REDIRECT TO HOME PAGE IF TOKEN EXISTS AND ARE REQUESTING LOGIN PAGE 
+    //REDIRECT TO HOME PAGE IF TOKEN EXISTS AND ARE REQUESTING LOGIN PAGE
     if (token && pathname === "/login") {
         return NextResponse.redirect("/");
     }
@@ -18,7 +24,7 @@ export async function middleware(req, res, next) {
     }
 
     //REDIRECT THEM TO LOGIN IF THEY DONT HAVE TOKEN AND ARE REQUESTING A PROTECTED ROUTE
-    // if (!token && pathname !== "/login") {
-    //     return NextResponse.redirect("/login");
-    // }
+    if (!token && pathname !== "/login") {
+        return NextResponse.redirect("/login");
+    }
 }
